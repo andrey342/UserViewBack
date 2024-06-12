@@ -4,7 +4,7 @@
 
 namespace UserViewBack.Migrations
 {
-    public partial class Inicial : Migration
+    public partial class eliminacioncascada : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

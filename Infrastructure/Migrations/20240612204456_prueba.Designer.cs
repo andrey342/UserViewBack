@@ -11,8 +11,8 @@ using UserViewBack.Infrastructure.Db;
 namespace UserViewBack.Migrations
 {
     [DbContext(typeof(DbConexion))]
-    [Migration("20240612174201_Inicial")]
-    partial class Inicial
+    [Migration("20240612204456_prueba")]
+    partial class prueba
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

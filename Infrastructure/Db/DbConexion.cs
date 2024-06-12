@@ -19,23 +19,22 @@ namespace UserViewBack.Infrastructure.Db
         // Relaciones de las tablas
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configurar relación uno a uno entre User y Address
+            // Configurar relación uno a uno entre User y Address con eliminación en cascada
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Address)
                 .WithMany()
-                .HasForeignKey(u => u.AddressId);
-
-            // Configurar relación uno a uno entre User y Company
+                .HasForeignKey(u => u.AddressId)
+                .OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Company)
                 .WithMany()
-                .HasForeignKey(u => u.CompanyId);
-
-            // Configurar relación uno a uno entre Address y Geo
+                .HasForeignKey(u => u.CompanyId)
+                .OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<Address>()
                 .HasOne(a => a.Geo)
                 .WithMany()
-                .HasForeignKey(a => a.GeoId);
+                .HasForeignKey(a => a.GeoId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             base.OnModelCreating(modelBuilder);
         }
