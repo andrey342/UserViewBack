@@ -1,4 +1,5 @@
-﻿using UserViewBack.Domain.Models;
+﻿using UserViewBack.Domain.Dto;
+using UserViewBack.Domain.Models;
 
 namespace UserViewBack.Application.Handlers.Interfaces
 {

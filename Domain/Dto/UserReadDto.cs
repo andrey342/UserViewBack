@@ -2,42 +2,39 @@
 
 namespace UserViewBack.Domain.Dto
 {
-    public class UserUpdateDto
+    public class UserReadDto
     {
         public int Id { get; set; }
-
-        [Required(ErrorMessage = "Username is required.")]
         public string Username { get; set; }
 
-        [EmailAddress(ErrorMessage = "Invalid email address.")]
+        [EmailAddress]
         public string Email { get; set; }
-
         public string? Name { get; set; }
 
-        public AddressUpdateDto Address { get; set; }
+        public AddressReadDto Address { get; set; }
         public string Phone { get; set; }
         public string Website { get; set; }
-        public CompanyUpdateDto Company { get; set; }
+        public CompanyReadDto Company { get; set; }
     }
 
-    public class AddressUpdateDto
+    public class AddressReadDto
     {
         public int Id { get; set; }
         public string Street { get; set; }
         public string Suite { get; set; }
         public string City { get; set; }
         public string Zipcode { get; set; }
-        public GeoUpdateDto Geo { get; set; }
+        public GeoReadDto Geo { get; set; }
     }
 
-    public class GeoUpdateDto
+    public class GeoReadDto
     {
         public int Id { get; set; }
         public string Lat { get; set; }
         public string Lng { get; set; }
     }
 
-    public class CompanyUpdateDto
+    public class CompanyReadDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
