@@ -6,7 +6,6 @@ using UserViewBack.Domain.Dto;
 namespace UserViewBack.Web.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
     public class UserController: ControllerBase
     {
         // Handlers necesarios para realizar operaciones de lectura y escritura
@@ -21,7 +20,7 @@ namespace UserViewBack.Web.Controllers
         }
 
         // GET: api/users
-        [HttpGet]
+        [HttpGet("api/users")]
         public async Task<ActionResult<IEnumerable<UserReadDto>>> GetUsers()
         {
             var users = await _userQueryHandler.GetAllAsync();
@@ -29,7 +28,7 @@ namespace UserViewBack.Web.Controllers
         }
 
         // GET: api/users/{id}
-        [HttpGet("{id}")]
+        [HttpGet("api/users/{id}")]
         public async Task<ActionResult<UserReadDto>> GetUser(int id)
         {
             var user = await _userQueryHandler.GetByIdAsync(id);
@@ -41,7 +40,7 @@ namespace UserViewBack.Web.Controllers
         }
 
         // POST: api/users
-        [HttpPost]
+        [HttpPost("api/users")]
         public async Task<ActionResult<UserReadDto>> CreateUser(UserCreateDto userCreateDto)
         {
             var user = await _userCommandHandler.CreateAsync(userCreateDto);
@@ -49,7 +48,7 @@ namespace UserViewBack.Web.Controllers
         }
 
         // PUT: api/users/{id}
-        [HttpPut("{id}")]
+        [HttpPut("api/users/{id}")]
         public async Task<IActionResult> UpdateUser(int id, UserUpdateDto userUpdateDto)
         {
             if(id != userUpdateDto.Id)
@@ -62,7 +61,7 @@ namespace UserViewBack.Web.Controllers
         }
 
         // DELETE: api/users/{id}
-        [HttpDelete("{id}")]
+        [HttpDelete("api/users/{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
             await _userCommandHandler.DeleteAsync(id);

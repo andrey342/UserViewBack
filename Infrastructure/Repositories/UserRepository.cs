@@ -14,12 +14,22 @@ namespace UserViewBack.Infrastructure.Repositories
 
         public async Task<List<User>> GetAllAsync()
         {
-            return await _dbConexion.Users.ToListAsync();
+            // Carga ansiosa, recuperar user y sus entidades relacionadas
+            return await _dbConexion.Users
+                .Include(u => u.Address)
+                    .ThenInclude(a => a.Geo)
+                .Include(u => u.Company)
+                .ToListAsync();
         }
 
         public async Task<User> GetByIdAsync(int id)
         {
-            return await _dbConexion.Users.FindAsync(id);
+            // Carga ansiosa, recuperar user y sus entidades relacionadas
+            return await _dbConexion.Users
+                .Include(u => u.Address)
+                    .ThenInclude(a => a.Geo)
+                .Include(u => u.Company)
+                .FirstOrDefaultAsync(u => u.Id == id);
         }
 
         public async Task<User> CreateAsync(User item)

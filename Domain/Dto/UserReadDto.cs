@@ -11,9 +11,12 @@ namespace UserViewBack.Domain.Dto
         public string Email { get; set; }
         public string? Name { get; set; }
 
+        public int AddressId { get; set; }
         public AddressReadDto Address { get; set; }
         public string Phone { get; set; }
         public string Website { get; set; }
+
+        public int CompanyId { get; set; }
         public CompanyReadDto Company { get; set; }
     }
 
@@ -24,6 +27,8 @@ namespace UserViewBack.Domain.Dto
         public string Suite { get; set; }
         public string City { get; set; }
         public string Zipcode { get; set; }
+
+        public int GeoId { get; set; }
         public GeoReadDto Geo { get; set; }
     }
 

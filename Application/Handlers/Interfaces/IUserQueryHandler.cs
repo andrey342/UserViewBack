@@ -1,4 +1,5 @@
-﻿using UserViewBack.Domain.Models;
+﻿using UserViewBack.Domain.Dto;
+using UserViewBack.Domain.Models;
 
 namespace UserViewBack.Application.Handlers.Interfaces
 {
@@ -8,7 +9,7 @@ namespace UserViewBack.Application.Handlers.Interfaces
     public interface IUserQueryHandler
     {
         // Patron CQRS - Logica de lectura
-        Task<List<User>> GetAllAsync();
-        Task<User> GetByIdAsync(int id);
+        Task<List<UserReadDto>> GetAllAsync();
+        Task<UserReadDto> GetByIdAsync(int id);
     }
 }

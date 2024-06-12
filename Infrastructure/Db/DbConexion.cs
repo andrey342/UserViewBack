@@ -7,6 +7,10 @@ namespace UserViewBack.Infrastructure.Db
     public class DbConexion: DbContext
     {
         public DbSet<User> Users { get; set; }
+        public DbSet<Address> Addresses { get; set; }
+        public DbSet<Geo> Geos { get; set; }
+        public DbSet<Company> Companies { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -15,20 +19,23 @@ namespace UserViewBack.Infrastructure.Db
         // Relaciones de las tablas
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Configurar relación uno a uno entre User y Address
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Address)
-                .WithOne()
-                .HasForeignKey<Address>(a => a.Id);
+                .WithMany()
+                .HasForeignKey(u => u.AddressId);
 
+            // Configurar relación uno a uno entre User y Company
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Company)
-                .WithOne()
-                .HasForeignKey<Company>(c => c.Id);
+                .WithMany()
+                .HasForeignKey(u => u.CompanyId);
 
+            // Configurar relación uno a uno entre Address y Geo
             modelBuilder.Entity<Address>()
                 .HasOne(a => a.Geo)
-                .WithOne()
-                .HasForeignKey<Geo>(g => g.Id);
+                .WithMany()
+                .HasForeignKey(a => a.GeoId);
 
             base.OnModelCreating(modelBuilder);
         }

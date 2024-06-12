@@ -12,9 +12,12 @@ namespace UserViewBack.Domain.Dto
 
         public string? Name { get; set; }
 
+        [Required(ErrorMessage = "Address is required.")]
         public AddressCreateDto Address { get; set; }
         public string Phone { get; set; }
         public string Website { get; set; }
+
+        [Required(ErrorMessage = "Company is required.")]
         public CompanyCreateDto Company { get; set; }
     }
 
@@ -24,6 +27,8 @@ namespace UserViewBack.Domain.Dto
         public string Suite { get; set; }
         public string City { get; set; }
         public string Zipcode { get; set; }
+
+        [Required(ErrorMessage = "Geo is required.")]
         public GeoCreateDto Geo { get; set; }
     }
 

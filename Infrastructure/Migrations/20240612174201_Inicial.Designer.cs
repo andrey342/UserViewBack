@@ -11,8 +11,8 @@ using UserViewBack.Infrastructure.Db;
 namespace UserViewBack.Migrations
 {
     [DbContext(typeof(DbConexion))]
-    [Migration("20240611195030_nuevo-user")]
-    partial class nuevouser
+    [Migration("20240612174201_Inicial")]
+    partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,11 +26,17 @@ namespace UserViewBack.Migrations
             modelBuilder.Entity("UserViewBack.Domain.Models.Address", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("GeoId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Street")
                         .IsRequired()
@@ -46,13 +52,18 @@ namespace UserViewBack.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Address");
+                    b.HasIndex("GeoId");
+
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("UserViewBack.Domain.Models.Company", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Bs")
                         .IsRequired()
@@ -68,13 +79,16 @@ namespace UserViewBack.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Company");
+                    b.ToTable("Companies");
                 });
 
             modelBuilder.Entity("UserViewBack.Domain.Models.Geo", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Lat")
                         .IsRequired()
@@ -86,7 +100,7 @@ namespace UserViewBack.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Geo");
+                    b.ToTable("Geos");
                 });
 
             modelBuilder.Entity("UserViewBack.Domain.Models.User", b =>
@@ -96,6 +110,12 @@ namespace UserViewBack.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("AddressId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -119,49 +139,41 @@ namespace UserViewBack.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AddressId");
+
+                    b.HasIndex("CompanyId");
+
                     b.ToTable("Users");
                 });
 
             modelBuilder.Entity("UserViewBack.Domain.Models.Address", b =>
                 {
-                    b.HasOne("UserViewBack.Domain.Models.User", null)
-                        .WithOne("Address")
-                        .HasForeignKey("UserViewBack.Domain.Models.Address", "Id")
+                    b.HasOne("UserViewBack.Domain.Models.Geo", "Geo")
+                        .WithMany()
+                        .HasForeignKey("GeoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
 
-            modelBuilder.Entity("UserViewBack.Domain.Models.Company", b =>
-                {
-                    b.HasOne("UserViewBack.Domain.Models.User", null)
-                        .WithOne("Company")
-                        .HasForeignKey("UserViewBack.Domain.Models.Company", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("UserViewBack.Domain.Models.Geo", b =>
-                {
-                    b.HasOne("UserViewBack.Domain.Models.Address", null)
-                        .WithOne("Geo")
-                        .HasForeignKey("UserViewBack.Domain.Models.Geo", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("UserViewBack.Domain.Models.Address", b =>
-                {
-                    b.Navigation("Geo")
-                        .IsRequired();
+                    b.Navigation("Geo");
                 });
 
             modelBuilder.Entity("UserViewBack.Domain.Models.User", b =>
                 {
-                    b.Navigation("Address")
+                    b.HasOne("UserViewBack.Domain.Models.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Company")
+                    b.HasOne("UserViewBack.Domain.Models.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Address");
+
+                    b.Navigation("Company");
                 });
 #pragma warning restore 612, 618
         }

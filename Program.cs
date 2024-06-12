@@ -47,6 +47,19 @@ builder.Services.AddSingleton<IHangfireUserDownloadService, HangfireUserDownload
 builder.Services.AddHangfireServer();
 
 builder.Services.AddControllers();
+
+// Configure CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        });
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -62,6 +75,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+// Enable CORS
+app.UseCors("AllowAllOrigins");
+
 app.UseAuthorization();
 
 app.MapControllers();
@@ -72,6 +88,6 @@ app.UseHangfireDashboard();
 // Configurar el trabajo recurrente para ejecutar cada 1 min
 RecurringJob.AddOrUpdate<IHangfireUserDownloadService>(
     service => service.DownloadAndSaveUsers(),
-    Cron.MinuteInterval(1));
+    Cron.MinuteInterval(10));
 
 app.Run();
