@@ -44,7 +44,8 @@ namespace UserViewBack.Web.Controllers
         public async Task<ActionResult<UserReadDto>> CreateUser(UserCreateDto userCreateDto)
         {
             var user = await _userCommandHandler.CreateAsync(userCreateDto);
-            return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user); // ??
+            // Devolvemos un action con el user actualizado
+            return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
         }
 
         // PUT: api/users/{id}

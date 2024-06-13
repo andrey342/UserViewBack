@@ -88,6 +88,6 @@ app.UseHangfireDashboard();
 // Configurar el trabajo recurrente para ejecutar cada 1 min
 RecurringJob.AddOrUpdate<IHangfireUserDownloadService>(
     service => service.DownloadAndSaveUsers(),
-    Cron.MinuteInterval(10));
+    Cron.MinuteInterval(1));
 
 app.Run();

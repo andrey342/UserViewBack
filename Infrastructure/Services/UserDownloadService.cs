@@ -22,7 +22,7 @@ namespace UserViewBack.Infrastructure.Services
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _timer = new Timer(DownloadAndSaveUsers, null, TimeSpan.Zero, TimeSpan.FromMinutes(1000));
+            _timer = new Timer(DownloadAndSaveUsers, null, TimeSpan.Zero, TimeSpan.FromMinutes(2));
             return Task.CompletedTask;
         }
 
